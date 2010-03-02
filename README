@@ -1,0 +1,7 @@
+== Robot Identifier
+
+=== Installation
+
+* gem install robot-identifier
+
+After installation you must run robot-identifier-update to download the robots database from http://www.robotstxt.org
