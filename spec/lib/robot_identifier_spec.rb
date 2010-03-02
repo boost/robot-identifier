@@ -37,6 +37,12 @@ describe RobotIdentifier do
     end
 
     describe 'when called with a useragent' do
+      it 'should return the first robot matching useragent if passed a regex' do
+        robot = @instance.find(/robot/i)
+        robot.should be_a(Hash)
+        robot['id'].should =~ /robot/
+      end
+      
       it 'should return any robot matching useragent if passed just the user agent' do
         @instance.find('iRobot').should be_a(Hash)
         @instance.find('iRobot')['id'].should == 'i-robot'
@@ -45,6 +51,21 @@ describe RobotIdentifier do
       it 'should return nil if a useragent is specified and no robots match' do
         @instance.find('muggins').should be_nil
       end
+    end
+  end
+  
+  describe '#exists?' do
+    it 'should return true if there is a robot with that useragent' do
+      @instance.exists?('iRobot').should be_true
+    end
+    
+    it 'should return true if there is a robot matching that useragent regexp' do
+      @instance.exists?(/robot/i).should be_true
+    end
+    
+    it 'should return false if there is no robot matching that useragent' do
+      @instance.exists?('Muggins').should be_false
+      @instance.exists?(/robot/).should be_false
     end
   end
 end

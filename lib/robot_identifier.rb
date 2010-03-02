@@ -5,12 +5,16 @@ class RobotIdentifier
     elsif all_or_first == :first
       find_first(key, value)
     else
-      ROBOTS[USER_AGENTS[all_or_first]]
+      if all_or_first.is_a?(Regexp)
+        find_first('useragent', all_or_first)
+      else      
+        ROBOTS[USER_AGENTS[all_or_first]]
+      end
     end
   end
   
   def exists?(user_agent)
-    USER_AGENTS.has_key?(user_agent)
+    !!(user_agent.is_a?(Regexp) ? USER_AGENTS.keys.detect{|key| key =~ user_agent} : USER_AGENTS.has_key?(user_agent))
   end
   
   def method_missing(symbol, *args)

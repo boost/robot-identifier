@@ -15,10 +15,15 @@ class RobotIdentifierUpdater
     if force || !File.exists?(DATABASE_FILE)
       puts "Downloading from #{UPDATE_URL}"
       
+      # Clear the file
+      File.open(DATABASE_FILE, 'w') do |file|
+        file.write ''
+      end
+      
       EventMachine.run do
         http = EventMachine::HttpRequest.new(UPDATE_URL).get
         http.callback do
-          File.open(database_file, 'w') do |file|
+          File.open(DATABASE_FILE, 'w') do |file|
             file.write http.response
           end
           
@@ -62,8 +67,6 @@ class RobotIdentifierUpdater
   
   def add_robot(robot)
     if robot['id']
-      puts "Add #{robot.inspect}"
-
       @robots[robot['id']] = robot
 
       if robot['useragent']
