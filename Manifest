@@ -1,0 +1,11 @@
+CHANGELOG
+LICENSE
+Manifest
+README
+Rakefile
+bin/robot_identifier_update
+lib/robot-identifier/updater.rb
+lib/robot_identifier.rb
+spec/lib/robot_identifier_spec.rb
+spec/spec.opts
+spec/spec_helper.rb
