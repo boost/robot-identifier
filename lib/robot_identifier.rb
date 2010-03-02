@@ -9,6 +9,22 @@ class RobotIdentifier
     end
   end
   
+  def exists?(user_agent)
+    USER_AGENTS.has_key?(user_agent)
+  end
+  
+  def method_missing(symbol, *args)
+    if symbol.to_s =~ /find_by_(.*)/
+      find(:first, $1, *args)
+    elsif symbol.to_s =~ /find_all_by_(.*)/
+      find(:all, $1, *args)
+    else
+      super
+    end
+  end
+  
+  private
+  
   def find_first(key, value)
     ROBOTS.values.detect do |robot|
       if value.is_a?(Regexp)
@@ -26,20 +42,6 @@ class RobotIdentifier
       else
         robot[key] == value
       end
-    end
-  end
-  
-  def exists?(user_agent)
-    USER_AGENTS.has_key?(user_agent)
-  end
-  
-  def method_missing(symbol, *args)
-    if symbol.to_s =~ /find_by_(.*)/
-      find(:first, $1, *args)
-    elsif symbol.to_s =~ /find_all_by_(.*)/
-      find(:all, $1, *args)
-    else
-      super
     end
   end
 end
