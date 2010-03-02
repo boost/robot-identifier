@@ -46,4 +46,8 @@ class RobotIdentifier
   end
 end
 
-require File.join(File.dirname(__FILE__), 'robot-identifier', 'database.rb')
+begin
+  require File.join(File.dirname(__FILE__), 'robot-identifier', 'database.rb')
+rescue LoadError
+  puts "Robot identifier cannot be used until it has been updated. Run sudo robot-identifier-update"
+end

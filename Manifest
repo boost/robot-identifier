@@ -3,7 +3,7 @@ LICENSE
 Manifest
 README
 Rakefile
-bin/robot_identifier_update
+bin/robot-identifier-update
 lib/robot-identifier/updater.rb
 lib/robot_identifier.rb
 spec/lib/robot_identifier_spec.rb
