@@ -27,6 +27,9 @@ class RobotIdentifier
     end
   end
   
+  def identify
+  end
+  
   private
   
   def find_first(key, value)

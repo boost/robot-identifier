@@ -28,7 +28,7 @@ describe RobotIdentifier do
       end
       
       it 'should return the exact match if there is only one matching useragent' do
-        @instance.find(:first, 'useragent', 'MyRobot')['id'].should == 'my-robot'
+        @instance.find(:first, 'useragent', 'MyRobot/2.X (+html http://myrobot.com)')['id'].should == 'my-robot'
       end
       
       it 'should return nil if :first is specified and no robots match' do
@@ -44,8 +44,8 @@ describe RobotIdentifier do
       end
       
       it 'should return any robot matching useragent if passed just the user agent' do
-        @instance.find('iRobot').should be_a(Hash)
-        @instance.find('iRobot')['id'].should == 'i-robot'
+        @instance.find('iRobot 1.0a').should be_a(Hash)
+        @instance.find('iRobot 1.0a')['id'].should == 'i-robot'
       end
       
       it 'should return nil if a useragent is specified and no robots match' do
@@ -56,7 +56,7 @@ describe RobotIdentifier do
   
   describe '#exists?' do
     it 'should return true if there is a robot with that useragent' do
-      @instance.exists?('iRobot').should be_true
+      @instance.exists?('iRobot 1.0a').should be_true
     end
     
     it 'should return true if there is a robot matching that useragent regexp' do
@@ -65,7 +65,10 @@ describe RobotIdentifier do
     
     it 'should return false if there is no robot matching that useragent' do
       @instance.exists?('Muggins').should be_false
-      @instance.exists?(/robot/).should be_false
+      @instance.exists?(/arobot/).should be_false
     end
+  end
+  
+  describe '#identify' do
   end
 end
