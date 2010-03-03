@@ -1,11 +1,5 @@
 #!/usr/bin/env ruby
 
-begin
-  require 'rubygems'
-  require 'robot-identifier/updater'
-rescue LoadError
-  $:.unshift(File.expand_path(File.dirname(__FILE__) + '/../lib'))
-  require 'robot-identifier/updater'
-end
-
+$:.unshift(File.expand_path(File.dirname(__FILE__) + '/../lib'))
+require 'robot-identifier/updater'
 RobotIdentifierUpdater.new.update
