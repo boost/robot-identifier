@@ -27,7 +27,10 @@ class RobotIdentifier
     end
   end
   
-  def identify
+  def identify(useragent)
+    if useragent =~ /^([\w\s\d]+)/        
+      find(:first, 'useragent', /#{$1}/i)
+    end
   end
   
   private

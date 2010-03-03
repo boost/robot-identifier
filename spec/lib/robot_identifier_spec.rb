@@ -70,5 +70,20 @@ describe RobotIdentifier do
   end
   
   describe '#identify' do
+    before do
+      @useragent = "MyRobot/2.1 (+compatible +html http://myrobot.com)"
+    end
+    
+    it 'should identify the robot' do
+      @instance.identify(@useragent).should be_a(Hash)
+    end
+    
+    it 'should not identify a blank robot' do
+      @instance.identify('').should be_nil
+    end
+    
+    it 'should not identify a non-existing robot' do
+      @instance.identify('Internet Explorer').should be_nil
+    end
   end
 end
