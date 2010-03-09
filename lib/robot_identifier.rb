@@ -28,8 +28,15 @@ class RobotIdentifier
   end
   
   def identify(useragent)
-    if useragent =~ /^([\w\s\d]+)/        
-      find(:first, 'useragent', /#{$1}/i)
+    useragent = useragent.to_s.dup
+    
+    unless useragent.nil? || useragent == ''
+      useragent.gsub!(/[^\w\d\s\/:.]/, '.*')
+      useragent.gsub!(/\//, '\/')    
+      useragent.gsub!(/[\dX]+(.[\dX]+)?/, '[\dX]+(.[\dX]+)?')
+      useragent.gsub!(/\s+/, '\s+')
+    
+      find(:first, 'useragent', /#{useragent}/i)
     end
   end
   

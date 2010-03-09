@@ -71,11 +71,19 @@ describe RobotIdentifier do
   
   describe '#identify' do
     before do
-      @useragent = "MyRobot/2.1 (+compatible +html http://myrobot.com)"
+      @useragent_1 = "MyRobot/2.1 (+html http://myrobot.com)"
+      @useragent_2 = "Mozilla/5.0 (compatible; spider)"
+      @useragent_3 = "Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.9.2) Gecko/20100115 Firefox/3.6 (.NET CLR 3.5.30729)"
+      @useragent_4 = "MyRobot/2.2 (+html http://myrobot.com)"
     end
     
     it 'should identify the robot' do
-      @instance.identify(@useragent).should be_a(Hash)
+      @instance.identify(@useragent_1).should be_a(Hash)
+      @instance.identify(@useragent_2).should be_a(Hash)
+    end
+    
+    it 'should identify a robot with a different version number' do
+      @instance.identify(@useragent_4).should be_a(Hash)
     end
     
     it 'should not identify a blank robot' do
@@ -83,7 +91,7 @@ describe RobotIdentifier do
     end
     
     it 'should not identify a non-existing robot' do
-      @instance.identify('Internet Explorer').should be_nil
+      @instance.identify(@useragent_3).should be_nil
     end
   end
 end
